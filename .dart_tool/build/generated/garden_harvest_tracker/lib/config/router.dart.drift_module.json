@@ -1,7 +1,6 @@
 {
   "elements": {},
   "imports": [
-    "package:flutter/material.dart",
     "package:go_router/go_router.dart",
     "package:garden_harvest_tracker/features/shell/main_shell.dart",
     "package:garden_harvest_tracker/features/home/home_screen.dart",

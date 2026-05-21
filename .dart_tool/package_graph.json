@@ -36,6 +36,19 @@
       ]
     },
     {
+      "name": "flutter_launcher_icons",
+      "version": "0.14.4",
+      "dependencies": [
+        "args",
+        "checked_yaml",
+        "cli_util",
+        "image",
+        "json_annotation",
+        "path",
+        "yaml"
+      ]
+    },
+    {
       "name": "flutter_lints",
       "version": "4.0.0",
       "dependencies": [
@@ -357,6 +370,58 @@
       ]
     },
     {
+      "name": "yaml",
+      "version": "3.1.3",
+      "dependencies": [
+        "collection",
+        "source_span",
+        "string_scanner"
+      ]
+    },
+    {
+      "name": "path",
+      "version": "1.9.1",
+      "dependencies": []
+    },
+    {
+      "name": "json_annotation",
+      "version": "4.12.0",
+      "dependencies": [
+        "meta"
+      ]
+    },
+    {
+      "name": "image",
+      "version": "4.8.0",
+      "dependencies": [
+        "archive",
+        "meta",
+        "xml"
+      ]
+    },
+    {
+      "name": "cli_util",
+      "version": "0.4.2",
+      "dependencies": [
+        "meta",
+        "path"
+      ]
+    },
+    {
+      "name": "checked_yaml",
+      "version": "2.0.4",
+      "dependencies": [
+        "json_annotation",
+        "source_span",
+        "yaml"
+      ]
+    },
+    {
+      "name": "args",
+      "version": "2.7.0",
+      "dependencies": []
+    },
+    {
       "name": "lints",
       "version": "4.0.0",
       "dependencies": []
@@ -521,47 +586,13 @@
       ]
     },
     {
-      "name": "yaml",
-      "version": "3.1.3",
-      "dependencies": [
-        "collection",
-        "source_span",
-        "string_scanner"
-      ]
-    },
-    {
-      "name": "cli_util",
-      "version": "0.4.2",
-      "dependencies": [
-        "meta",
-        "path"
-      ]
-    },
-    {
       "name": "logging",
       "version": "1.3.0",
       "dependencies": []
     },
     {
-      "name": "args",
-      "version": "2.7.0",
-      "dependencies": []
-    },
-    {
       "name": "stream_transform",
       "version": "2.1.1",
-      "dependencies": []
-    },
-    {
-      "name": "json_annotation",
-      "version": "4.12.0",
-      "dependencies": [
-        "meta"
-      ]
-    },
-    {
-      "name": "path",
-      "version": "1.9.1",
       "dependencies": []
     },
     {
@@ -953,15 +984,6 @@
       ]
     },
     {
-      "name": "image",
-      "version": "4.8.0",
-      "dependencies": [
-        "archive",
-        "meta",
-        "xml"
-      ]
-    },
-    {
       "name": "flutter_web_plugins",
       "version": "0.0.0",
       "dependencies": [
@@ -1222,15 +1244,6 @@
       "name": "characters",
       "version": "1.4.1",
       "dependencies": []
-    },
-    {
-      "name": "checked_yaml",
-      "version": "2.0.4",
-      "dependencies": [
-        "json_annotation",
-        "source_span",
-        "yaml"
-      ]
     },
     {
       "name": "built_value",
@@ -1518,19 +1531,6 @@
         "collection",
         "meta",
         "pub_semver"
-      ]
-    },
-    {
-      "name": "flutter_launcher_icons",
-      "version": "0.14.4",
-      "dependencies": [
-        "args",
-        "checked_yaml",
-        "cli_util",
-        "image",
-        "json_annotation",
-        "path",
-        "yaml"
       ]
     }
   ],
