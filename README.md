@@ -1,6 +1,6 @@
-![Garden & Harvest Tracker](assets/images/app_icon.png)
+![Garden Tracker](assets/images/app_icon.png)
 
-# 🌱 Garden & Harvest Tracker
+# 🌱 Garden Tracker
 
 **The offline-first companion for homestead gardeners.**  
 Track every seed, harvest, expense, and reminder — all stored privately on your device.
