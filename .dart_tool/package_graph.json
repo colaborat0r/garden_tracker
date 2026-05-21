@@ -29,6 +29,7 @@
       "devDependencies": [
         "build_runner",
         "drift_dev",
+        "flutter_launcher_icons",
         "flutter_lints",
         "flutter_test",
         "riverpod_generator"
@@ -1517,6 +1518,19 @@
         "collection",
         "meta",
         "pub_semver"
+      ]
+    },
+    {
+      "name": "flutter_launcher_icons",
+      "version": "0.14.4",
+      "dependencies": [
+        "args",
+        "checked_yaml",
+        "cli_util",
+        "image",
+        "json_annotation",
+        "path",
+        "yaml"
       ]
     }
   ],
