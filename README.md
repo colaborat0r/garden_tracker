@@ -80,34 +80,7 @@ Flutter 3.24+  ·  Dart 3.3+  ·  Material You (Material 3)
 
 ---
 
-## 🚀 Getting Started
 
-### Prerequisites
-- [Flutter SDK](https://docs.flutter.dev/get-started/install) ≥ 3.24
-- Android SDK (API 21+) for Android builds
-
-### Run locally
-
-```bash
-# 1. Clone the repo
-git clone https://github.com/colaborat0r/garden_tracker.git
-cd garden_tracker
-
-# 2. Install dependencies
-flutter pub get
-
-# 3. Generate database & provider code
-dart run build_runner build --delete-conflicting-outputs
-
-# 4. Run the app
-flutter run
-```
-
-### Build a release APK
-
-```bash
-flutter build apk --release
-```
 
 ---
 
@@ -142,8 +115,6 @@ lib/
 - [x] JSON backup & restore
 - [x] Photos auto-saved to device Pictures folder (Google Photos compatible)
 - [ ] Home screen widget — garden summary
-- [ ] iCloud / Google Drive backup
-- [ ] iOS support
 
 ---
 
