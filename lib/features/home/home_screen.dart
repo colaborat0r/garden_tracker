@@ -113,49 +113,43 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                // ── Stats row ──
-                Row(
+                // ── Stats column ──
+                Column(
                   children: [
-                    Expanded(
-                      child: activePlants.when(
-                        data: (n) => StatCard(
-                          label: 'Active Plants',
-                          value: '$n',
-                          icon: Icons.eco,
-                          color: cs.primary,
-                          onTap: () => context.go('/garden'),
-                        ),
-                        loading: () => const _LoadingCard(),
-                        error: (_, __) => const SizedBox.shrink(),
+                    activePlants.when(
+                      data: (n) => StatCard(
+                        label: 'Active Plants',
+                        value: '$n',
+                        icon: Icons.eco,
+                        color: cs.primary,
+                        onTap: () => context.go('/garden'),
                       ),
+                      loading: () => const _LoadingCard(),
+                      error: (_, __) => const SizedBox.shrink(),
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: harvestTotal.when(
-                        data: (lbs) => StatCard(
-                          label: 'YTD Harvest',
-                          value: '${lbs.toStringAsFixed(1)} lb',
-                          icon: Icons.scale,
-                          color: Colors.amber.shade700,
-                          onTap: () => context.go('/reports'),
-                        ),
-                        loading: () => const _LoadingCard(),
-                        error: (_, __) => const SizedBox.shrink(),
+                    const SizedBox(height: 8),
+                    harvestTotal.when(
+                      data: (lbs) => StatCard(
+                        label: 'YTD Harvest',
+                        value: '${lbs.toStringAsFixed(1)} lb',
+                        icon: Icons.scale,
+                        color: Colors.amber.shade700,
+                        onTap: () => context.go('/reports'),
                       ),
+                      loading: () => const _LoadingCard(),
+                      error: (_, __) => const SizedBox.shrink(),
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: expenseTotal.when(
-                        data: (amt) => StatCard(
-                          label: 'YTD Spend',
-                          value: formatCurrency(amt),
-                          icon: Icons.attach_money,
-                          color: Colors.teal,
-                          onTap: () => context.go('/more/expenses'),
-                        ),
-                        loading: () => const _LoadingCard(),
-                        error: (_, __) => const SizedBox.shrink(),
+                    const SizedBox(height: 8),
+                    expenseTotal.when(
+                      data: (amt) => StatCard(
+                        label: 'YTD Spend',
+                        value: formatCurrency(amt),
+                        icon: Icons.attach_money,
+                        color: Colors.teal,
+                        onTap: () => context.go('/more/expenses'),
                       ),
+                      loading: () => const _LoadingCard(),
+                      error: (_, __) => const SizedBox.shrink(),
                     ),
                   ],
                 ),

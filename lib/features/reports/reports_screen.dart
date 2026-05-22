@@ -174,36 +174,30 @@ class _OverviewTab extends ConsumerWidget {
       padding: const EdgeInsets.all(16),
       children: [
         // Summary stats
-        Row(children: [
-          Expanded(
-            child: StatCard(
-              label: 'YTD Harvest',
-              value: harvestTotal.valueOrNull != null
-                  ? '${harvestTotal.value!.toStringAsFixed(1)} lb'
-                  : '…',
-              icon: Icons.scale,
-              color: Colors.green,
-            ),
+        Column(children: [
+          StatCard(
+            label: 'YTD Harvest',
+            value: harvestTotal.valueOrNull != null
+                ? '${harvestTotal.value!.toStringAsFixed(1)} lb'
+                : '…',
+            icon: Icons.scale,
+            color: Colors.green,
           ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: StatCard(
-              label: 'YTD Spend',
-              value: expenseTotal.valueOrNull != null
-                  ? formatCurrency(expenseTotal.value!)
-                  : '…',
-              icon: Icons.attach_money,
-              color: Colors.teal,
-            ),
+          const SizedBox(height: 8),
+          StatCard(
+            label: 'YTD Spend',
+            value: expenseTotal.valueOrNull != null
+                ? formatCurrency(expenseTotal.value!)
+                : '…',
+            icon: Icons.attach_money,
+            color: Colors.teal,
           ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: StatCard(
-              label: 'Cost/lb',
-              value: formatCurrency(costPerLb),
-              icon: Icons.trending_down,
-              color: cs.primary,
-            ),
+          const SizedBox(height: 8),
+          StatCard(
+            label: 'Cost/lb',
+            value: formatCurrency(costPerLb),
+            icon: Icons.trending_down,
+            color: cs.primary,
           ),
         ]),
         const SizedBox(height: 24),
