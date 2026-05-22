@@ -45,8 +45,40 @@ class Plants extends Table {
   // planted | growing | harvested | failed
   TextColumn get status =>
       text().withDefault(const Constant('planted'))();
+  // seedling | vegetative | flowering | fruiting | harvest_ready
+  TextColumn get growthStage => text().nullable()();
+  IntColumn get quantity => integer().nullable()();
+  // seed | transplant | nursery | cutting | gift
+  TextColumn get source => text().nullable()();
   TextColumn get notes => text().nullable()();
   TextColumn get photoPath => text().nullable()();
+  DateTimeColumn get createdAt =>
+      dateTime().withDefault(currentDateAndTime)();
+}
+
+// ─────────────────────────────────────────────
+//  PLANT PHOTOS  (gallery / photo timeline)
+// ─────────────────────────────────────────────
+class PlantPhotos extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  IntColumn get plantId => integer().references(Plants, #id)();
+  TextColumn get photoPath => text()();
+  TextColumn get caption => text().nullable()();
+  DateTimeColumn get takenAt =>
+      dateTime().withDefault(currentDateAndTime)();
+}
+
+// ─────────────────────────────────────────────
+//  JOURNAL ENTRIES  (notes / lessons learned)
+// ─────────────────────────────────────────────
+class JournalEntries extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get title => text()();
+  TextColumn get body => text().nullable()();
+  TextColumn get photoPath => text().nullable()();
+  // emoji mood: 🌱 😄 🌧️ 🤔 ✨
+  TextColumn get mood => text().nullable()();
+  TextColumn get tags => text().nullable()(); // comma-separated
   DateTimeColumn get createdAt =>
       dateTime().withDefault(currentDateAndTime)();
 }

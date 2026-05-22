@@ -85,8 +85,8 @@ class _OnboardingDialogState extends State<_OnboardingDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             // Page content
-            SizedBox(
-              height: 260,
+            ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: 220, maxHeight: 320),
               child: PageView.builder(
                 controller: _pageController,
                 itemCount: _pages.length,
@@ -159,23 +159,27 @@ class _OnboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(emoji, style: const TextStyle(fontSize: 56)),
-        const SizedBox(height: 16),
-        Text(
-          title,
-          style: tt.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 12),
-        Text(
-          body,
-          style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
-          textAlign: TextAlign.center,
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(height: 8),
+          Text(emoji, style: const TextStyle(fontSize: 56)),
+          const SizedBox(height: 16),
+          Text(
+            title,
+            style: tt.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            body,
+            style: tt.bodyMedium?.copyWith(color: cs.onSurfaceVariant),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 8),
+        ],
+      ),
     );
   }
 }

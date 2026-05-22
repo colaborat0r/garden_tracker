@@ -15,6 +15,9 @@ import '../features/more/more_screen.dart';
 import '../features/expenses/expenses_screen.dart';
 import '../features/reminders/reminders_screen.dart';
 import '../features/settings/settings_screen.dart';
+import '../features/settings/about_screen.dart';
+import '../features/knowledge/knowledge_screen.dart';
+import '../features/journal/journal_screen.dart';
 final GoRouter goRouter = GoRouter(
   initialLocation: '/home',
   routes: [
@@ -23,121 +26,86 @@ final GoRouter goRouter = GoRouter(
           MainShell(navigationShell: navigationShell),
       branches: [
         // ── Tab 0: Home ──
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/home',
-              builder: (c, s) => const HomeScreen(),
-            ),
-          ],
-        ),
+        StatefulShellBranch(routes: [
+          GoRoute(path: '/home', builder: (c, s) => const HomeScreen()),
+        ]),
         // ── Tab 1: Garden ──
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/garden',
-              builder: (c, s) => const BedsScreen(),
-              routes: [
-                GoRoute(
-                  path: 'add-bed',
-                  builder: (c, s) => const AddEditBedScreen(),
-                ),
-                GoRoute(
-                  path: 'bed/:bedId',
-                  builder: (c, s) => BedDetailScreen(
-                    bedId: int.parse(s.pathParameters['bedId']!),
+        StatefulShellBranch(routes: [
+          GoRoute(
+            path: '/garden',
+            builder: (c, s) => const BedsScreen(),
+            routes: [
+              GoRoute(path: 'add-bed', builder: (c, s) => const AddEditBedScreen()),
+              GoRoute(
+                path: 'bed/:bedId',
+                builder: (c, s) => BedDetailScreen(
+                    bedId: int.parse(s.pathParameters['bedId']!)),
+                routes: [
+                  GoRoute(
+                    path: 'edit',
+                    builder: (c, s) => AddEditBedScreen(
+                        bedId: int.parse(s.pathParameters['bedId']!)),
                   ),
-                  routes: [
-                    GoRoute(
-                      path: 'edit',
-                      builder: (c, s) => AddEditBedScreen(
-                        bedId: int.parse(s.pathParameters['bedId']!),
-                      ),
+                  GoRoute(
+                    path: 'add-plant',
+                    builder: (c, s) => AddEditPlantScreen(
+                        bedId: int.parse(s.pathParameters['bedId']!)),
+                  ),
+                  GoRoute(
+                    path: 'plant/:plantId',
+                    builder: (c, s) => PlantDetailScreen(
+                      plantId: int.parse(s.pathParameters['plantId']!),
+                      bedId: int.parse(s.pathParameters['bedId']!),
                     ),
-                    GoRoute(
-                      path: 'add-plant',
-                      builder: (c, s) => AddEditPlantScreen(
-                        bedId: int.parse(s.pathParameters['bedId']!),
+                    routes: [
+                      GoRoute(
+                        path: 'edit',
+                        builder: (c, s) => AddEditPlantScreen(
+                          bedId: int.parse(s.pathParameters['bedId']!),
+                          plantId: int.parse(s.pathParameters['plantId']!),
+                        ),
                       ),
-                    ),
-                    GoRoute(
-                      path: 'plant/:plantId',
-                      builder: (c, s) => PlantDetailScreen(
-                        plantId: int.parse(s.pathParameters['plantId']!),
-                        bedId: int.parse(s.pathParameters['bedId']!),
+                      GoRoute(
+                        path: 'add-observation',
+                        builder: (c, s) => AddObservationScreen(
+                            plantId: int.parse(s.pathParameters['plantId']!)),
                       ),
-                      routes: [
-                        GoRoute(
-                          path: 'edit',
-                          builder: (c, s) => AddEditPlantScreen(
-                            bedId: int.parse(s.pathParameters['bedId']!),
-                            plantId:
-                                int.parse(s.pathParameters['plantId']!),
-                          ),
-                        ),
-                        GoRoute(
-                          path: 'add-observation',
-                          builder: (c, s) => AddObservationScreen(
-                            plantId:
-                                int.parse(s.pathParameters['plantId']!),
-                          ),
-                        ),
-                        GoRoute(
-                          path: 'add-harvest',
-                          builder: (c, s) => AddHarvestScreen(
-                            plantId:
-                                int.parse(s.pathParameters['plantId']!),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
+                      GoRoute(
+                        path: 'add-harvest',
+                        builder: (c, s) => AddHarvestScreen(
+                            plantId: int.parse(s.pathParameters['plantId']!)),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ]),
         // ── Tab 2: Log ──
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/log',
-              builder: (c, s) => const QuickLogScreen(),
-            ),
-          ],
-        ),
+        StatefulShellBranch(routes: [
+          GoRoute(path: '/log', builder: (c, s) => const QuickLogScreen()),
+        ]),
         // ── Tab 3: Reports ──
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/reports',
-              builder: (c, s) => const ReportsScreen(),
-            ),
-          ],
-        ),
+        StatefulShellBranch(routes: [
+          GoRoute(path: '/reports', builder: (c, s) => const ReportsScreen()),
+        ]),
         // ── Tab 4: More ──
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
-              path: '/more',
-              builder: (c, s) => const MoreScreen(),
-              routes: [
-                GoRoute(
-                  path: 'expenses',
-                  builder: (c, s) => const ExpensesScreen(),
-                ),
-                GoRoute(
-                  path: 'reminders',
-                  builder: (c, s) => const RemindersScreen(),
-                ),
-                GoRoute(
-                  path: 'settings',
-                  builder: (c, s) => const SettingsScreen(),
-                ),
-              ],
-            ),
-          ],
-        ),
+        StatefulShellBranch(routes: [
+          GoRoute(
+            path: '/more',
+            builder: (c, s) => const MoreScreen(),
+            routes: [
+              GoRoute(path: 'expenses', builder: (c, s) => const ExpensesScreen()),
+              GoRoute(path: 'reminders', builder: (c, s) => const RemindersScreen()),
+              GoRoute(path: 'settings', builder: (c, s) => const SettingsScreen(), routes: [
+                GoRoute(path: 'about', builder: (c, s) => const AboutScreen()),
+              ]),
+              GoRoute(path: 'knowledge', builder: (c, s) => const KnowledgeScreen()),
+              GoRoute(path: 'journal', builder: (c, s) => const JournalScreen()),
+            ],
+          ),
+        ]),
       ],
     ),
   ],

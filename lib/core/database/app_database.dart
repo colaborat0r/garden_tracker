@@ -4,12 +4,13 @@ import 'package:drift_flutter/drift_flutter.dart';
 import 'tables.dart';
 part 'app_database.g.dart';
 @DriftDatabase(
-  tables: [Gardens, Beds, Plants, Observations, Harvests, Expenses, Reminders],
+  tables: [Gardens, Beds, Plants, Observations, Harvests, Expenses, Reminders,
+           PlantPhotos, JournalEntries],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onCreate: (m) async {
@@ -17,6 +18,15 @@ class AppDatabase extends _$AppDatabase {
           await customStatement('PRAGMA foreign_keys = ON');
           await into(gardens)
               .insert(GardensCompanion.insert(name: 'My Garden'));
+        },
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            await m.addColumn(plants, plants.growthStage);
+            await m.addColumn(plants, plants.quantity);
+            await m.addColumn(plants, plants.source);
+            await m.createTable(plantPhotos);
+            await m.createTable(journalEntries);
+          }
         },
         beforeOpen: (details) async {
           await customStatement('PRAGMA foreign_keys = ON');
@@ -111,6 +121,31 @@ class AppDatabase extends _$AppDatabase {
   Future<bool> updateReminder(Reminder r) => update(reminders).replace(r);
   Future<int> deleteReminder(int id) =>
       (delete(reminders)..where((r) => r.id.equals(id))).go();
+  // PLANT PHOTOS
+  Stream<List<PlantPhoto>> watchPhotosByPlant(int plantId) =>
+      (select(plantPhotos)
+            ..where((p) => p.plantId.equals(plantId))
+            ..orderBy([(p) => OrderingTerm.desc(p.takenAt)]))
+          .watch();
+  Stream<List<PlantPhoto>> watchAllPhotos() =>
+      (select(plantPhotos)
+            ..orderBy([(p) => OrderingTerm.desc(p.takenAt)]))
+          .watch();
+  Future<int> insertPlantPhoto(PlantPhotosCompanion p) =>
+      into(plantPhotos).insert(p);
+  Future<int> deletePlantPhoto(int id) =>
+      (delete(plantPhotos)..where((p) => p.id.equals(id))).go();
+  // JOURNAL ENTRIES
+  Stream<List<JournalEntry>> watchAllJournalEntries() =>
+      (select(journalEntries)
+            ..orderBy([(j) => OrderingTerm.desc(j.createdAt)]))
+          .watch();
+  Future<int> insertJournalEntry(JournalEntriesCompanion j) =>
+      into(journalEntries).insert(j);
+  Future<bool> updateJournalEntry(JournalEntry j) =>
+      update(journalEntries).replace(j);
+  Future<int> deleteJournalEntry(int id) =>
+      (delete(journalEntries)..where((j) => j.id.equals(id))).go();
   // ANALYTICS
   Future<double> getTotalHarvestThisYear() async {
     final now = DateTime.now();
@@ -133,6 +168,70 @@ class AppDatabase extends _$AppDatabase {
           ..where((p) => p.status.isIn(['planted', 'growing'])))
         .get();
     return rows.length;
+  }
+  /// Yield by crop (common name → total lbs)
+  Future<Map<String, double>> getYieldByCrop() async {
+    final harvestRows = await watchAllHarvests().first;
+    final plantRows = await watchAllPlants().first;
+    final plantMap = {for (final p in plantRows) p.id: p};
+    final result = <String, double>{};
+    for (final h in harvestRows.where((h) => h.unit == 'lb' || h.unit == 'lbs')) {
+      final name = plantMap[h.plantId]?.commonName ?? 'Unknown';
+      result[name] = (result[name] ?? 0) + h.quantity;
+    }
+    return result;
+  }
+  /// Yield by bed name → total lbs
+  Future<Map<String, double>> getYieldByBed() async {
+    final harvestRows = await watchAllHarvests().first;
+    final plantRows = await watchAllPlants().first;
+    final bedRows = await watchAllBeds().first;
+    final plantMap = {for (final p in plantRows) p.id: p};
+    final bedMap = {for (final b in bedRows) b.id: b};
+    final result = <String, double>{};
+    for (final h in harvestRows.where((h) => h.unit == 'lb' || h.unit == 'lbs')) {
+      final plant = plantMap[h.plantId];
+      if (plant != null) {
+        final bedName = bedMap[plant.bedId]?.name ?? 'Unknown Bed';
+        result[bedName] = (result[bedName] ?? 0) + h.quantity;
+      }
+    }
+    return result;
+  }
+  /// Success rate by variety: returns list sorted by success rate desc
+  Future<List<Map<String, dynamic>>> getSuccessRateByVariety() async {
+    final plantRows = await watchAllPlants().first;
+    final grouped = <String, List<Plant>>{};
+    for (final p in plantRows) {
+      final key = '${p.commonName} — ${p.variety}';
+      grouped.putIfAbsent(key, () => []).add(p);
+    }
+    final list = grouped.entries.map((e) {
+      final total = e.value.length;
+      final harvested = e.value.where((p) => p.status == 'harvested').length;
+      final failed = e.value.where((p) => p.status == 'failed').length;
+      return {
+        'variety': e.key,
+        'total': total,
+        'harvested': harvested,
+        'failed': failed,
+        'successRate': total > 0 ? harvested / total : 0.0,
+      };
+    }).toList();
+    list.sort((a, b) =>
+        (b['successRate'] as double).compareTo(a['successRate'] as double));
+    return list;
+  }
+  /// Monthly harvest data for a given year
+  Future<Map<int, double>> getYearlyHarvestData(int year) async {
+    final harvestRows = await watchAllHarvests().first;
+    final result = {for (var i = 1; i <= 12; i++) i: 0.0};
+    for (final h in harvestRows) {
+      if (h.date.year == year && (h.unit == 'lb' || h.unit == 'lbs')) {
+        result[h.date.month] = (result[h.date.month] ?? 0) + h.quantity;
+      }
+    }
+    return result;
   }
 }
 QueryExecutor _openConnection() {
