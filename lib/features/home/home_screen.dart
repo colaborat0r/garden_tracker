@@ -204,7 +204,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ? _emptySection(context,
                           'No harvests expected\nthis week 🌱')
                       : SizedBox(
-                          height: 145,
+                          height: 160,
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             itemCount: plants.length,
