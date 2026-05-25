@@ -36,6 +36,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final harvestTotal = ref.watch(harvestTotalThisYearProvider);
     final expenseTotal = ref.watch(expenseTotalThisYearProvider);
     final activePlants = ref.watch(activePlantsCountProvider);
+    final allHarvestsList =
+        ref.watch(allHarvestsProvider).valueOrNull ?? [];
+    final allExpensesList =
+        ref.watch(allExpensesProvider).valueOrNull ?? [];
+    final totalHarvestLbs = allHarvestsList
+        .where((h) => h.unit == 'lb' || h.unit == 'lbs')
+        .fold(0.0, (s, h) => s + h.quantity);
+    final totalExpenseAll =
+        allExpensesList.fold(0.0, (s, e) => s + e.amount);
+    final costPerLb =
+        totalHarvestLbs > 0 ? totalExpenseAll / totalHarvestLbs : 0.0;
     final readyThisWeek = ref.watch(readyThisWeekProvider);
     final recentHarvests = ref.watch(recentHarvestsProvider);
     final recentObs = ref.watch(recentObservationsProvider);
@@ -113,43 +124,63 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
-                // ── Stats column ──
+                // ── Stats 2×2 grid ──
                 Column(
                   children: [
-                    activePlants.when(
-                      data: (n) => StatCard(
-                        label: 'Active Plants',
-                        value: '$n',
-                        icon: Icons.eco,
-                        color: cs.primary,
-                        onTap: () => context.go('/garden'),
-                      ),
-                      loading: () => const _LoadingCard(),
-                      error: (_, __) => const SizedBox.shrink(),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: StatCard(
+                            label: 'YTD Harvest',
+                            value: harvestTotal.valueOrNull != null
+                                ? '${harvestTotal.value!.toStringAsFixed(1)} lb'
+                                : '…',
+                            icon: Icons.scale,
+                            color: Colors.amber.shade700,
+                            onTap: () => context.go('/reports'),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: StatCard(
+                            label: 'Active Plants',
+                            value: activePlants.valueOrNull != null
+                                ? '${activePlants.value}'
+                                : '…',
+                            icon: Icons.eco,
+                            color: cs.primary,
+                            onTap: () => context.go('/garden'),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 8),
-                    harvestTotal.when(
-                      data: (lbs) => StatCard(
-                        label: 'YTD Harvest',
-                        value: '${lbs.toStringAsFixed(1)} lb',
-                        icon: Icons.scale,
-                        color: Colors.amber.shade700,
-                        onTap: () => context.go('/reports'),
-                      ),
-                      loading: () => const _LoadingCard(),
-                      error: (_, __) => const SizedBox.shrink(),
-                    ),
-                    const SizedBox(height: 8),
-                    expenseTotal.when(
-                      data: (amt) => StatCard(
-                        label: 'YTD Spend',
-                        value: formatCurrency(amt),
-                        icon: Icons.attach_money,
-                        color: Colors.teal,
-                        onTap: () => context.go('/more/expenses'),
-                      ),
-                      loading: () => const _LoadingCard(),
-                      error: (_, __) => const SizedBox.shrink(),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: StatCard(
+                            label: 'YTD Spend',
+                            value: expenseTotal.valueOrNull != null
+                                ? formatCurrency(expenseTotal.value!)
+                                : '…',
+                            icon: Icons.attach_money,
+                            color: Colors.teal,
+                            onTap: () => context.go('/more/expenses'),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: StatCard(
+                            label: 'Cost/lb',
+                            value: formatCurrency(costPerLb),
+                            icon: Icons.trending_down,
+                            color: cs.primary,
+                            onTap: () => context.go('/reports'),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -504,22 +535,7 @@ class _RecentActivityList extends StatelessWidget {
     );
   }
 }
-class _LoadingCard extends StatelessWidget {
-  const _LoadingCard();
-  @override
-  Widget build(BuildContext context) {
-    return const Card(
-        child: SizedBox(
-          height: 80,
-          child: Center(
-              child: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2))),
-        ),
-    );
-  }
-}
+
 extension _ListExtension<T> on List<T> {
   T? firstWhereOrNull(bool Function(T) test) {
     for (final e in this) {

@@ -5,7 +5,7 @@
   "packages": [
     {
       "name": "garden_harvest_tracker",
-      "version": "1.0.0+1",
+      "version": "1.1.0+2",
       "dependencies": [
         "csv",
         "drift",

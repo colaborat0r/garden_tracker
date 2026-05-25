@@ -138,6 +138,7 @@ class _OverviewTab extends ConsumerWidget {
     final allPlants = ref.watch(allPlantsProvider).valueOrNull ?? [];
     final harvestTotal = ref.watch(harvestTotalThisYearProvider);
     final expenseTotal = ref.watch(expenseTotalThisYearProvider);
+    final activePlants = ref.watch(activePlantsCountProvider);
     final yearlyData = ref.watch(yearlyHarvestDataProvider(chartYear));
     final cs = Theme.of(context).colorScheme;
     final tt = Theme.of(context).textTheme;
@@ -173,31 +174,58 @@ class _OverviewTab extends ConsumerWidget {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        // Summary stats
+        // Summary stats 2×2 grid
         Column(children: [
-          StatCard(
-            label: 'YTD Harvest',
-            value: harvestTotal.valueOrNull != null
-                ? '${harvestTotal.value!.toStringAsFixed(1)} lb'
-                : '…',
-            icon: Icons.scale,
-            color: Colors.green,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: StatCard(
+                  label: 'YTD Harvest',
+                  value: harvestTotal.valueOrNull != null
+                      ? '${harvestTotal.value!.toStringAsFixed(1)} lb'
+                      : '…',
+                  icon: Icons.scale,
+                  color: Colors.green,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: StatCard(
+                  label: 'Active Plants',
+                  value: activePlants.valueOrNull != null
+                      ? '${activePlants.value}'
+                      : '…',
+                  icon: Icons.eco,
+                  color: cs.primary,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 8),
-          StatCard(
-            label: 'YTD Spend',
-            value: expenseTotal.valueOrNull != null
-                ? formatCurrency(expenseTotal.value!)
-                : '…',
-            icon: Icons.attach_money,
-            color: Colors.teal,
-          ),
-          const SizedBox(height: 8),
-          StatCard(
-            label: 'Cost/lb',
-            value: formatCurrency(costPerLb),
-            icon: Icons.trending_down,
-            color: cs.primary,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: StatCard(
+                  label: 'YTD Spend',
+                  value: expenseTotal.valueOrNull != null
+                      ? formatCurrency(expenseTotal.value!)
+                      : '…',
+                  icon: Icons.attach_money,
+                  color: Colors.teal,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: StatCard(
+                  label: 'Cost/lb',
+                  value: formatCurrency(costPerLb),
+                  icon: Icons.trending_down,
+                  color: cs.primary,
+                ),
+              ),
+            ],
           ),
         ]),
         const SizedBox(height: 24),
