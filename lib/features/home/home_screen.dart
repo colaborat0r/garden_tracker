@@ -204,7 +204,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ? _emptySection(context,
                           'No harvests expected\nthis week 🌱')
                       : SizedBox(
-                          height: 130,
+                          height: 145,
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             itemCount: plants.length,
@@ -394,7 +394,7 @@ class _ReadyPlantCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text('🌿', style: TextStyle(fontSize: 28)),
-              const Spacer(),
+              const SizedBox(height: 8),
               Text(plant.commonName,
                   style: tt.labelLarge?.copyWith(fontWeight: FontWeight.bold),
                   maxLines: 1,
