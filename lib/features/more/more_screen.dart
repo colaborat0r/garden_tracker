@@ -15,6 +15,41 @@ class MoreScreen extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             sliver: SliverList(
               delegate: SliverChildListDelegate([
+                // New Features Section
+                Text(
+                  '🌟 Garden Features',
+                  style: tt.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 12),
+                _MenuCard(
+                  icon: Icons.eco,
+                  title: 'All Plants',
+                  subtitle: 'View and manage all your plants',
+                  color: Colors.blue,
+                  onTap: () => context.push('/more/plants'),
+                ),
+                const SizedBox(height: 12),
+                _MenuCard(
+                  icon: Icons.grain,
+                  title: 'Harvest Log',
+                  subtitle: 'Complete history of all harvests',
+                  color: Colors.amber.shade700,
+                  onTap: () => context.push('/more/harvests'),
+                ),
+                const SizedBox(height: 12),
+                _MenuCard(
+                  icon: Icons.analytics_outlined,
+                  title: 'Analytics',
+                  subtitle: 'Deep insights and productivity metrics',
+                  color: Colors.purple,
+                  onTap: () => context.push('/more/analytics'),
+                ),
+                const SizedBox(height: 24),
+                Text(
+                  '🛠 Tools & Settings',
+                  style: tt.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 12),
                 _MenuCard(
                   icon: Icons.attach_money,
                   title: 'Expenses',

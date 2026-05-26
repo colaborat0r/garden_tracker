@@ -231,7 +231,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     Expanded(
                       child: _QuickActionBtn(
                         icon: Icons.add_circle_outline,
-                        label: 'Log Observation',
+                        label: 'Log Activity',
                         color: cs.primary,
                         onTap: () => context.go('/log'),
                       ),
@@ -252,6 +252,59 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         label: 'Add Bed',
                         color: Colors.teal,
                         onTap: () => context.push('/garden/add-bed'),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+                // ── Garden Overview ──
+                Text('🌱 Garden Overview',
+                    style: tt.titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold)),
+                const SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _FeatureCard(
+                        icon: Icons.yard,
+                        title: 'Beds',
+                        subtitle: 'Manage garden beds',
+                        color: Colors.green,
+                        onTap: () => context.go('/garden'),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: _FeatureCard(
+                        icon: Icons.eco,
+                        title: 'Plants',
+                        subtitle: 'View all plants',
+                        color: Colors.blue,
+                        onTap: () => context.push('/more/plants'),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _FeatureCard(
+                        icon: Icons.grain,
+                        title: 'Harvests',
+                        subtitle: 'View harvest log',
+                        color: Colors.amber.shade700,
+                        onTap: () => context.push('/more/harvests'),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: _FeatureCard(
+                        icon: Icons.analytics,
+                        title: 'Analytics',
+                        subtitle: 'Deep insights',
+                        color: Colors.purple,
+                        onTap: () => context.push('/more/analytics'),
                       ),
                     ),
                   ],
@@ -463,6 +516,64 @@ class _QuickActionBtn extends StatelessWidget {
     );
   }
 }
+
+class _FeatureCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final Color color;
+  final VoidCallback onTap;
+
+  const _FeatureCard({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.color,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(icon, color: color, size: 24),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: cs.onSurfaceVariant,
+                    ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _RecentActivityList extends StatelessWidget {
   final List<Harvest> harvests;
   final List<Observation> observations;

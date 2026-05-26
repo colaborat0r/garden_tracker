@@ -5,8 +5,11 @@ import '../features/home/home_screen.dart';
 import '../features/beds/beds_screen.dart';
 import '../features/beds/add_edit_bed_screen.dart';
 import '../features/beds/bed_detail_screen.dart';
+import '../features/plants/plants_screen.dart';
 import '../features/plants/plant_detail_screen.dart';
 import '../features/plants/add_edit_plant_screen.dart';
+import '../features/harvest/harvest_log_screen.dart';
+import '../features/analytics/analytics_screen.dart';
 import '../features/log/quick_log_screen.dart';
 import '../features/log/add_observation_screen.dart';
 import '../features/log/add_harvest_screen.dart';
@@ -96,6 +99,9 @@ final GoRouter goRouter = GoRouter(
             path: '/more',
             builder: (c, s) => const MoreScreen(),
             routes: [
+              GoRoute(path: 'plants', builder: (c, s) => const PlantsScreen()),
+              GoRoute(path: 'harvests', builder: (c, s) => const HarvestLogScreen()),
+              GoRoute(path: 'analytics', builder: (c, s) => const AnalyticsScreen()),
               GoRoute(path: 'expenses', builder: (c, s) => const ExpensesScreen()),
               GoRoute(path: 'reminders', builder: (c, s) => const RemindersScreen()),
               GoRoute(path: 'settings', builder: (c, s) => const SettingsScreen(), routes: [
