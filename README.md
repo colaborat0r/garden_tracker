@@ -10,6 +10,7 @@ Track every seed, harvest, expense, and reminder — all stored privately on you
 [![SQLite](https://img.shields.io/badge/SQLite-Drift_ORM-003B57?logo=sqlite&logoColor=white)](https://drift.simonbinder.eu)
 [![Riverpod](https://img.shields.io/badge/State-Riverpod_2-00BCD4)](https://riverpod.dev)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![Support on Ko-fi](https://img.shields.io/badge/Support-Ko--fi-F16061?logo=ko-fi&logoColor=white)](https://ko-fi.com/chicktrack)
 
 
 ---
@@ -118,6 +119,13 @@ lib/
 
 ---
 
+## ☕ Support
+
+If you find this app helpful and want to support its development, you can buy me a coffee!
+
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/chicktrack)
+
+---
 
 ## 📜 License
 
