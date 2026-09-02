@@ -9,7 +9,7 @@ Track every seed, harvest, expense, and reminder — all stored privately on you
 [![Dart](https://img.shields.io/badge/Dart-3.3+-0175C2?logo=dart&logoColor=white)](https://dart.dev)
 [![SQLite](https://img.shields.io/badge/SQLite-Drift_ORM-003B57?logo=sqlite&logoColor=white)](https://drift.simonbinder.eu)
 [![Riverpod](https://img.shields.io/badge/State-Riverpod_2-00BCD4)](https://riverpod.dev)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![License](https://img.shields.io/badge/License-CC_BY--NC_4.0-lightgrey)](LICENSE)
 [![Support on Ko-fi](https://img.shields.io/badge/Support-Ko--fi-F16061?logo=ko-fi&logoColor=white)](https://ko-fi.com/chicktrack)
 
 
@@ -129,7 +129,7 @@ If you find this app helpful and want to support its development, you can buy me
 
 ## 📜 License
 
-Distributed under the MIT License. See [`LICENSE`](LICENSE) for more information.
+This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International** license (CC BY-NC 4.0). You may share and adapt it with attribution; you may not use it for commercial purposes. See [`LICENSE`](LICENSE) and https://creativecommons.org/licenses/by-nc/4.0/
 
 ---
 
