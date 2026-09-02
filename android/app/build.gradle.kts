@@ -39,6 +39,14 @@ android {
     }
 }
 
+// Stable GitHub Releases asset name: /releases/latest/download/garden_tracker.apk
+android.applicationVariants.configureEach {
+    outputs.configureEach {
+        (this as com.android.build.gradle.internal.api.BaseVariantOutputImpl).outputFileName =
+            "garden_tracker.apk"
+    }
+}
+
 flutter {
     source = "../.."
 }

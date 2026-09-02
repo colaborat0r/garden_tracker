@@ -37,7 +37,11 @@ Track every seed, harvest, expense, and reminder — all stored privately on you
 No need to build from source — just download and install the latest APK directly on your Android device.
 
 ### Step 1 — Download the APK
-Go to the [**Releases page**](https://github.com/colaborat0r/garden_tracker/releases/latest) and download **`GardenTracker-v1.1.0.apk`** (or the latest version listed).
+The APK is always named **`garden_tracker.apk`** (no version in the filename).
+
+Go to the [**Releases page**](https://github.com/colaborat0r/garden_tracker/releases/latest) and download **[`garden_tracker.apk`](https://github.com/colaborat0r/garden_tracker/releases/latest/download/garden_tracker.apk)**.
+
+> **Until the next release:** v1.1.1 is still uploaded as [`app-release.apk`](https://github.com/colaborat0r/garden_tracker/releases/download/v1.1.1/app-release.apk). Use that file for now. From the next Release, attach **`garden_tracker.apk`**.
 
 ### Step 2 — Allow installs from unknown sources
 Because this app isn't distributed through the Play Store, Android requires you to allow installation from unknown sources:
@@ -51,7 +55,7 @@ Because this app isn't distributed through the Play Store, Android requires you 
 
 ### Step 3 — Install
 1. Open your **Downloads** folder (or tap the notification after downloading)
-2. Tap **`GardenTracker-v1.1.0.apk`**
+2. Tap **`garden_tracker.apk`** (or `app-release.apk` until the next release)
 3. Tap **Install** → **Open**
 
 ### Updating
